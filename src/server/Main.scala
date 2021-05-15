@@ -1,9 +1,11 @@
 package server
 
-import shared.Adder
+import shared.Threading
 
 object Main {
   def main(args: Array[String]) = {
-    println("Server" + Adder.add(1, 2))
+    val server = new Server()
+    server.start()
+    Threading.registerShutdownHook()
   }
 }

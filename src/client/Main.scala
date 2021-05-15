@@ -1,9 +1,11 @@
 package client
 
-import shared.Adder
+import shared.Threading
 
 object Main {
   def main(args: Array[String]) = {
-    println("Client" + Adder.add(4, 2))
+    val client = new Client()
+    client.start()
+    Threading.registerShutdownHook()
   }
 }
