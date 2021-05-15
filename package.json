@@ -1,5 +1,5 @@
 {
-  "jar": "cactus",
+  "jar": "scopic",
   "scripts": {
     "preinstall": "npm run install:libs",
     "install:libs": "./install-libs.mjs",
