@@ -1,0 +1,23 @@
+{
+  "jar": "cactus",
+  "scripts": {
+    "preinstall": "npm run install:libs",
+    "install:libs": "./install-libs.mjs",
+    "clean": "rm -rf dist out",
+    "compile": "mkdir -p out && scalac $(find src -name *.scala) -d out",
+    "compile:dev": "npm run compile && chokidar \"src/**/*.scala\" -c \"scalac -classpath out {path} -d out\"",
+    "pack:client": "rm -rf dist/*_client.jar && mkdir -p dist && jar cvfm dist/$(cat package.json | jq -r .jar)_client.jar MANIFEST_CLIENT.MF -C ./out shared -C ./out client",
+    "pack:server": "rm -rf dist/*_server.jar && mkdir -p dist && jar cvfm dist/$(cat package.json | jq -r .jar)_server.jar MANIFEST_SERVER.MF -C ./out shared -C ./out server",
+    "start:client": "java -jar dist/$(cat package.json | jq -r .jar)_client.jar -cp libs/scala-library-2.13.5.jar",
+    "start:server": "java -jar dist/$(cat package.json | jq -r .jar)_server.jar -cp libs/scala-library-2.13.5.jar",
+    "start:client:dev": "java -cp out:libs/scala-library-2.13.5.jar client.Main",
+    "start:server:dev": "java -cp out:libs/scala-library-2.13.5.jar server.Main"
+  },
+  "libs": [
+    "https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.5/scala-library-2.13.5.jar"
+  ],
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0",
+    "zx": "^1.6.0"
+  }
+}
